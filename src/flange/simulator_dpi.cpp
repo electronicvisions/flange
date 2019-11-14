@@ -38,7 +38,7 @@ dpi_handle_t dpi_comm_init()
 		throw std::runtime_error(
 		    "Could not convert FLANGE_SIMULATION_RCF_PORT environment variable to a port.");
 	}
-	RCF::RcfServer* server = new RCF::RcfServer(RCF::TcpEndpoint(port));
+	RCF::RcfServer* server = new RCF::RcfServer(RCF::TcpEndpoint("0.0.0.0", port));
 
 	server->bind<flange::I_SimulatorControl>(*service);
 	server->start();
