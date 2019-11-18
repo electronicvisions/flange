@@ -23,11 +23,16 @@ SimulatorClient::SimulatorClient(ip_t ip, port_t port) : m_impl(std::make_unique
 
 SimulatorClient::SimulatorClient() : m_impl()
 {
+	char const* env_host = std::getenv("FLANGE_SIMULATION_RCF_HOST");
+	static std::string default_host = "127.0.0.1";
+	if (env_host == nullptr) {
+		env_host = default_host.c_str();
+	}
 	char const* env_port = std::getenv("FLANGE_SIMULATION_RCF_PORT");
 	if (env_port == nullptr) {
-		throw std::runtime_error("No port to simulator found in environment.");
+		throw std::runtime_error("No port to simulator found in environment (FLANGE_SIMULATION_RCF_PORT).");
 	}
-	m_impl = std::make_unique<Impl>("127.0.0.1", static_cast<port_t>(std::atoi(env_port)));
+	m_impl = std::make_unique<Impl>(env_host, static_cast<port_t>(std::atoi(env_port)));
 }
 
 SimulatorClient::~SimulatorClient()
