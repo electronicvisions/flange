@@ -5,17 +5,29 @@
 
 namespace flange {
 
-class timeout : public virtual std::exception
+/**
+ * Exception describing a timeout in function calls to the simulator.
+ */
+class Timeout : public virtual std::exception
 {
 public:
-	explicit timeout(std::string const& msg);
+	/**
+	 * Construct timeout from cause message.
+	 * @param message Exception cause
+	 */
+	explicit Timeout(std::string const& message);
 
-	virtual ~timeout() noexcept override = default;
+	/** Destructor. */
+	virtual ~Timeout() noexcept override = default;
 
+	/**
+	 * Get exception cause.
+	 * @return String describing cause of exception
+	 */
 	virtual const char* what() const noexcept override;
 
 private:
-	std::string const m_msg;
+	std::string const m_message;
 };
 
 } // namespace flange

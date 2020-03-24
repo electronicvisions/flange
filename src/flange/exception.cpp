@@ -2,11 +2,11 @@
 
 namespace flange {
 
-timeout::timeout(std::string const& msg) : m_msg(msg) {}
+Timeout::Timeout(std::string const& message) : m_message(message) {}
 
-const char* timeout::what() const noexcept
+const char* Timeout::what() const noexcept
 {
-	return m_msg.c_str();
+	return m_message.c_str();
 }
 
 } // namespace flange

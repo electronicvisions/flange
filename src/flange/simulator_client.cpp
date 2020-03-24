@@ -51,7 +51,7 @@ SimulatorClient::word_type SimulatorClient::receive()
 {
 	for (size_t wait_counter = 0; !m_impl->m_sim.received_data_available(); wait_counter++) {
 		if (wait_counter == timeout_intervals_us.size()) {
-			throw timeout("Timeout while waiting for simulation response");
+			throw Timeout("Timeout while waiting for simulation response");
 		}
 		usleep(timeout_intervals_us[wait_counter]);
 	}
