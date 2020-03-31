@@ -2,4 +2,5 @@
 
 wafDefaultPipeline(projects: ["flange"],
                    container: [app: "visionary-dls"],
-                   notificationChannel: "#dls-software")
+                   notificationChannel: "#dls-software",
+                   enableClangFormatFullDiff: true)

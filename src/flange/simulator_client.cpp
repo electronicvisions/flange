@@ -30,13 +30,13 @@ SimulatorClient::SimulatorClient() : m_impl()
 	}
 	char const* env_port = std::getenv("FLANGE_SIMULATION_RCF_PORT");
 	if (env_port == nullptr) {
-		throw std::runtime_error("No port to simulator found in environment (FLANGE_SIMULATION_RCF_PORT).");
+		throw std::runtime_error(
+		    "No port to simulator found in environment (FLANGE_SIMULATION_RCF_PORT).");
 	}
 	m_impl = std::make_unique<Impl>(env_host, static_cast<port_t>(std::atoi(env_port)));
 }
 
-SimulatorClient::~SimulatorClient()
-{}
+SimulatorClient::~SimulatorClient() {}
 
 void SimulatorClient::send(word_type const word)
 {

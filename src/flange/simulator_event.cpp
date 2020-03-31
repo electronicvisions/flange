@@ -9,9 +9,7 @@ namespace flange {
 SimulatorEvent::SimulatorEvent() : event_type(), timestamp(), data() {}
 
 SimulatorEvent::SimulatorEvent(event_types event_type, clk_t timestamp, al_data_t opt_data) :
-    event_type(event_type),
-    timestamp(timestamp),
-    data(0x0)
+    event_type(event_type), timestamp(timestamp), data(0x0)
 {
 	if (opt_data) {
 		if (event_type != AL_DATA) {
