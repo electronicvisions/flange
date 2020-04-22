@@ -31,7 +31,7 @@ def build(bld):
         target='pyflange',
         source='../include/flange/flange.h',
         genpybind_tags='flange',
-        features='genpybind cxx cxxshlib pyext',
+        features='genpybind cxx cxxshlib pyext pyembed',
         use=['flange', 'PYBIND11FLANGE'],
         install_path='${PREFIX}/lib',
         linkflags='-Wl,-z,defs',
