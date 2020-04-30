@@ -8,10 +8,10 @@ mkdir my_project && cd my_project/
 
 # first build
 waf setup --project flange
-srun -p compile -c8 -- singularity exec --app visionary-dls /containers/stable/latest waf configure install --test-execnone
+srun -p compile -c8 -- singularity exec --app dls-core /containers/stable/latest waf configure install --test-execnone
 
 # run (software) tests
-singularity exec --app visionary-dls /containers/stable/latest waf install --test-execall
+singularity exec --app dls-core /containers/stable/latest waf install --test-execall
 ```
 
 ## Documentation

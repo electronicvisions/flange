@@ -1,6 +1,6 @@
 @Library("jenlib") _
 
 wafDefaultPipeline(projects: ["flange"],
-                   container: [app: "visionary-dls"],
+                   container: [app: "dls-core"],
                    notificationChannel: "#dls-software",
                    enableClangFormatFullDiff: true)
