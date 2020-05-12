@@ -15,7 +15,7 @@ struct SimulatorClient::Impl
 {
 	Impl(ip_t ip, port_t port) : m_rcf(), m_sim(RCF::TcpEndpoint(ip, port)) {}
 
-	RCF::RcfInitDeinit m_rcf;
+	RCF::RcfInit m_rcf;
 	flange::RcfClient<flange::I_SimulatorControl> m_sim;
 };
 

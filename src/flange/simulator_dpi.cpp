@@ -11,13 +11,13 @@ extern "C"
 // the C-API uses global variables to track the service and RCF server instances
 static std::vector<flange::SimulatorControl*> g_service;
 static std::vector<RCF::RcfServer*> g_server;
-static RCF::RcfInitDeinit rcfInit;
 
 static constexpr uint32_t rx_runnable_state_sleep_time = 1000000;
 
 // FIXME: support multiple servers
 dpi_handle_t dpi_comm_init()
 {
+	RCF::init();
 	if (!g_server.empty() || !g_service.empty()) {
 		throw std::runtime_error("Pre-existing services found; this is not supported for now.");
 	}
@@ -61,6 +61,7 @@ void dpi_comm_shutdown(dpi_handle_t /*handle*/)
 		delete service;
 		g_service.pop_back();
 	}
+	RCF::deinit();
 }
 
 bool dpi_comm_tx(dpi_handle_t handle, uint64_t data)
