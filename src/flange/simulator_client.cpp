@@ -38,16 +38,16 @@ SimulatorClient::SimulatorClient() : m_impl()
 
 SimulatorClient::~SimulatorClient() {}
 
-void SimulatorClient::send(word_type const word)
+void SimulatorClient::send(data_type const& words)
 {
 	SimulatorEvent event;
 	event.timestamp = SimulatorEvent::timestamp_asap; // back-to-back
-	event.data = word;
+	event.data = words;
 	event.event_type = SimulatorEvent::event_types::AL_DATA;
 	m_impl->m_sim.push_event(event);
 }
 
-SimulatorClient::word_type SimulatorClient::receive()
+SimulatorClient::data_type SimulatorClient::receive()
 {
 	for (size_t wait_counter = 0; !m_impl->m_sim.received_data_available(); wait_counter++) {
 		if (wait_counter == timeout_intervals_us.size()) {

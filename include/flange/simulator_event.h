@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <vector>
 
 namespace SF {
 class Archive;
@@ -16,7 +17,7 @@ struct SimulatorEvent
 	/** Time type in cycles */
 	typedef uint64_t clk_t;
 	/** Payload data type */
-	typedef uint64_t al_data_t;
+	typedef std::vector<uint64_t> al_data_t;
 
 	/** Event type */
 	enum event_types
@@ -30,8 +31,11 @@ struct SimulatorEvent
 	/** Default constructor. */
 	SimulatorEvent();
 
-	/** Constructor validating that (data != 0) only if (event_type == AL_DATA). */
-	SimulatorEvent(event_types event_type, clk_t timestamp, al_data_t data = 0);
+	/**
+	 * Constructor validating that (data != {}) only if (event_type == AL_DATA).
+	 * Only size=1 data is allowed currently.
+	 */
+	SimulatorEvent(event_types event_type, clk_t timestamp, al_data_t data = {});
 
 	/** Type of event. */
 	event_types event_type;

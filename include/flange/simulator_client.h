@@ -21,7 +21,7 @@ public:
 	typedef uint16_t port_t;
 	typedef std::string ip_t;
 
-	typedef SimulatorEvent::al_data_t word_type;
+	typedef SimulatorEvent::al_data_t data_type;
 
 	/**
 	 * Create and start connection to simulation server.
@@ -49,17 +49,17 @@ public:
 	~SimulatorClient();
 
 	/**
-	 * Send a packet containing a single word.
-	 * @param word Word to send
+	 * Send a packet containing a vector of words.
+	 * @param words Words to send
 	 */
-	void send(word_type word);
+	void send(data_type const& words);
 
 	/**
-	 * Receive a packet containing a single word.
-	 * @return Received word
+	 * Receive a packet containing a vector of words.
+	 * @return Received vector of words
 	 * @throws std::runtime_error On timeout of 1s waiting for response
 	 */
-	word_type receive();
+	data_type receive();
 
 	/**
 	 * Set runnable state of the simulation.

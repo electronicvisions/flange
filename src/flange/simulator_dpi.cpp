@@ -69,7 +69,7 @@ bool dpi_comm_tx(dpi_handle_t handle, uint64_t data)
 	RCF::Lock lock(g_service[handle]->m_service_lock);
 
 	flange::SimulatorEvent se(
-	    flange::SimulatorEvent::AL_DATA, g_service[handle]->m_current_clk, data);
+	    flange::SimulatorEvent::AL_DATA, g_service[handle]->m_current_clk, {data});
 
 	g_service[handle]->m_from_sim.push_back(se);
 
@@ -161,10 +161,13 @@ bool dpi_comm_rx(
 			break;
 		}
 
+		case flange::SimulatorEvent::TERMINATE: {
+			*terminate = true;
+			break;
+		}
+
 		case flange::SimulatorEvent::AL_DATA: {
-			// fill data structures in case of TERMINATE or AL_DATA event_type
-			*terminate = (se.event_type == flange::SimulatorEvent::TERMINATE);
-			*rx_data = (se.event_type == flange::SimulatorEvent::AL_DATA) ? se.data : 0;
+			*rx_data = (se.event_type == flange::SimulatorEvent::AL_DATA) ? se.data.at(0) : 0;
 			ret = (se.event_type == flange::SimulatorEvent::AL_DATA);
 			break;
 		}
