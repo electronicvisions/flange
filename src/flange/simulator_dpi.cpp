@@ -5,6 +5,8 @@ extern "C"
 #include <unistd.h>
 }
 
+#include <cassert>
+
 #include "flange/simulator_control.h"
 #include "flange/simulator_control_if.h"
 
@@ -64,14 +66,21 @@ void dpi_comm_shutdown(dpi_handle_t /*handle*/)
 	RCF::deinit();
 }
 
-bool dpi_comm_tx(dpi_handle_t handle, uint64_t data)
+void dpi_comm_tx(dpi_handle_t handle, FlangeFrame* data)
 {
 	RCF::Lock lock(g_service[handle]->m_service_lock);
 
-	flange::SimulatorEvent se(
-	    flange::SimulatorEvent::AL_DATA, g_service[handle]->m_current_clk, {data});
+	assert(data != nullptr);
+	uint64_t* elem = data->data;
+	assert(elem != nullptr);
 
-	g_service[handle]->m_from_sim.push_back(se);
+	if (data->size > 0) {
+		flange::SimulatorEvent se(
+		    flange::SimulatorEvent::AL_DATA, g_service[handle]->m_current_clk,
+		    {elem, elem + data->size});
+
+		g_service[handle]->m_from_sim.push_back(se);
+	}
 
 	// unset runnable if we were instructed to do so after the next event from sim
 	bool& tx_pause = g_service[handle]->m_pause_after_next_event_from_sim;
@@ -79,16 +88,14 @@ bool dpi_comm_tx(dpi_handle_t handle, uint64_t data)
 		tx_pause = false;
 		g_service[handle]->m_runnable = false;
 	}
-
-	return true; // unused arbitrary return value
 }
 
 bool dpi_comm_rx(
-    dpi_handle_t handle, bool rx_ready, bool* terminate, bool* reset, uint64_t* rx_data)
+    dpi_handle_t handle, bool rx_ready, bool* terminate, bool* reset, FlangeFrame* rx_data)
 {
 	*reset = false;
 	*terminate = false;
-	*rx_data = 0;
+	rx_data->size = 0;
 	flange::SimulatorEvent::clk_t now = 0;
 
 	{
@@ -148,7 +155,7 @@ bool dpi_comm_rx(
 		throw std::runtime_error("Illegal (early) timestamp found");
 	}
 
-	bool ret = false;
+	bool valid_data = false;
 	// PAUSE events will stop the simulation at the next invocation of dpi_comm_rx
 	switch (se.event_type) {
 		case flange::SimulatorEvent::PAUSE: {
@@ -167,8 +174,10 @@ bool dpi_comm_rx(
 		}
 
 		case flange::SimulatorEvent::AL_DATA: {
-			*rx_data = (se.event_type == flange::SimulatorEvent::AL_DATA) ? se.data.at(0) : 0;
-			ret = (se.event_type == flange::SimulatorEvent::AL_DATA);
+			rx_data->size = 1;
+			rx_data->data[0] =
+			    (se.event_type == flange::SimulatorEvent::AL_DATA) ? se.data.at(0) : 0;
+			valid_data = (se.event_type == flange::SimulatorEvent::AL_DATA);
 			break;
 		}
 
@@ -180,5 +189,5 @@ bool dpi_comm_rx(
 	// remove event from queue
 	g_service[handle]->m_to_sim.pop_front();
 
-	return ret;
+	return valid_data;
 }

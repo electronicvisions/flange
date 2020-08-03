@@ -19,11 +19,11 @@ TEST(SimulatorEvent, General)
 
 	EXPECT_NO_THROW(SimulatorEvent(SimulatorEvent::PAUSE_AFTER_RECEIVE, 17));
 
-	// only event with event_type AL_DATA is allowed to be constructed from size=1 data
+	// only event with event_type AL_DATA is allowed to be constructed from size!=0 data
 	EXPECT_THROW(SimulatorEvent(SimulatorEvent::PAUSE, 17, {23}), std::runtime_error);
 	EXPECT_THROW(SimulatorEvent(SimulatorEvent::PAUSE_AFTER_RECEIVE, 17, {23}), std::runtime_error);
 	EXPECT_THROW(SimulatorEvent(SimulatorEvent::TERMINATE, 17, {23}), std::runtime_error);
-	EXPECT_THROW(SimulatorEvent(SimulatorEvent::AL_DATA, 17, {23, 24}), std::runtime_error);
+	EXPECT_NO_THROW(SimulatorEvent(SimulatorEvent::AL_DATA, 17, {23, 24}));
 
 	SimulatorEvent event1(SimulatorEvent::AL_DATA, 1, {17});
 	SimulatorEvent event2 = event1;

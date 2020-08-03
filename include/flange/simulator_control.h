@@ -49,9 +49,9 @@ private:
 	/// C-API access functions
 	friend dpi_handle_t ::dpi_comm_init();
 	friend void ::dpi_comm_shutdown(dpi_handle_t handle);
-	friend bool ::dpi_comm_tx(dpi_handle_t handle, uint64_t tx_data);
+	friend void ::dpi_comm_tx(dpi_handle_t handle, FlangeFrame* tx_data);
 	friend bool ::dpi_comm_rx(
-	    dpi_handle_t handle, bool rx_ready, bool* terminate, bool* reset, uint64_t* rx_data);
+	    dpi_handle_t handle, bool rx_ready, bool* terminate, bool* reset, FlangeFrame* rx_data);
 
 	mutable RCF::Mutex m_service_lock;
 	std::deque<SimulatorEvent> m_to_sim;
