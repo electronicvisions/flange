@@ -1,10 +1,9 @@
 #include "flange/simulator_client.h"
 
-#include <array>
-#include <unistd.h>
-
 #include "flange/exception.h"
 #include "flange/simulator_control_if.h"
+#include <array>
+#include <unistd.h>
 
 namespace flange {
 

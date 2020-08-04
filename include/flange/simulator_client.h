@@ -1,12 +1,10 @@
 #pragma once
-
+#include "flange/genpybind.h"
+#include "flange/simulator_event.h"
 #include <memory>
 #include <stdbool.h>
 #include <stdint.h>
 #include <string>
-
-#include "flange/genpybind.h"
-#include "flange/simulator_event.h"
 
 namespace flange GENPYBIND_TAG_FLANGE {
 

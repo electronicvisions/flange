@@ -1,7 +1,6 @@
 #include "flange/simulator_event.h"
 
 #include <stdexcept>
-
 #include <SF/utility.hpp>
 #include <SF/vector.hpp>
 

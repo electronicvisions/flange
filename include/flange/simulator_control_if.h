@@ -1,13 +1,9 @@
 #pragma once
-
+#include "RCF/RCF.hpp"
+#include "SF/deque.hpp"
+#include "flange/simulator_event.h"
 #include <cstdint>
 #include <deque>
-
-#include <SF/deque.hpp>
-
-#include <RCF/RCF.hpp>
-
-#include "flange/simulator_event.h"
 
 namespace flange {
 

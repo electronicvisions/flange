@@ -1,8 +1,7 @@
-#include <gtest/gtest.h>
-
 #include "SF/ITextStream.hpp"
 #include "SF/OTextStream.hpp"
 #include "flange/simulator_event.h"
+#include <gtest/gtest.h>
 
 using namespace flange;
 

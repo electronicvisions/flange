@@ -1,10 +1,8 @@
 #pragma once
-
 #include "RCF/RCF.hpp"
-#include <deque>
-
 #include "flange/simulator_dpi.h"
 #include "flange/simulator_event.h"
+#include <deque>
 
 namespace flange {
 
