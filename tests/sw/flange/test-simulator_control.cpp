@@ -1,5 +1,5 @@
-#include <gtest/gtest.h>
 #include "flange/simulator_control.h"
+#include <gtest/gtest.h>
 
 using namespace flange;
 

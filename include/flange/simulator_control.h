@@ -1,7 +1,7 @@
 #pragma once
 
-#include <deque>
 #include "RCF/RCF.hpp"
+#include <deque>
 
 #include "flange/simulator_dpi.h"
 #include "flange/simulator_event.h"
