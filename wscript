@@ -7,7 +7,9 @@ from waflib.extras.symwaf2ic import get_toplevel_path
 def depends(dep):
     dep('code-format')
     dep('lib-rcf')
-    dep.recurse('pyflange')
+
+    if getattr(dep.options, 'with_flange_python_bindings', True):
+        dep.recurse('pyflange')
 
 
 def options(opt):
@@ -16,12 +18,18 @@ def options(opt):
     opt.load("doxygen")
     opt.recurse('pyflange')
 
+    hopts = opt.add_option_group('flange options')
+    hopts.add_withoption('flange-python-bindings', default=True,
+                         help='Toggle the generation and build of flange python bindings')
+
 
 def configure(conf):
     conf.load('compiler_c')
     conf.load('compiler_cxx')
     conf.load("doxygen")
-    conf.recurse('pyflange')
+
+    if getattr(conf.options, 'with_flange_python_bindings', True):
+        conf.recurse('pyflange')
 
 
 def build(bld):
@@ -44,7 +52,8 @@ def build(bld):
         use          = ['flange'],
     )
 
-    bld.recurse('pyflange')
+    if getattr(bld.options, 'with_flange_python_bindings', True):
+        bld.recurse('pyflange')
 
     bld(
         features = 'doxygen',
