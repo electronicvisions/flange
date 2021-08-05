@@ -55,18 +55,19 @@ def build(bld):
     if getattr(bld.options, 'with_flange_python_bindings', True):
         bld.recurse('pyflange')
 
-    bld(
-        features = 'doxygen',
-        name = 'flange_documentation',
-        doxyfile = bld.root.make_node(join(get_toplevel_path(), "code-format", "doxyfile")),
-        install_path = 'doc/flange',
-        pars = {
-            "PROJECT_NAME": "\"Flange\"",
-            "INPUT": join(get_toplevel_path(), "flange", "include"),
-            "PREDEFINED": "GENPYBIND()= GENPYBIND_TAG_FLANGE=",
-            "OUTPUT_DIRECTORY": join(get_toplevel_path(), "build", "flange", "doc")
-        },
-    )
+    if bld.env.DOXYGEN:
+        bld(
+            features = 'doxygen',
+            name = 'flange_documentation',
+            doxyfile = bld.root.make_node(join(get_toplevel_path(), "code-format", "doxyfile")),
+            install_path = 'doc/flange',
+            pars = {
+                "PROJECT_NAME": "\"Flange\"",
+                "INPUT": join(get_toplevel_path(), "flange", "include"),
+                "PREDEFINED": "GENPYBIND()= GENPYBIND_TAG_FLANGE=",
+                "OUTPUT_DIRECTORY": join(get_toplevel_path(), "build", "flange", "doc")
+            },
+        )
 
     # Create test summary (to stdout and XML file)
     bld.add_post_fun(summary)
