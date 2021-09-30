@@ -3,4 +3,5 @@
 wafDefaultPipeline(projects: ["flange"],
                    container: [app: "dls-core"],
                    notificationChannel: "#dls-software",
-                   enableClangFormatFullDiff: true)
+                   enableClangFormatFullDiff: true,
+                   configureInstallOptions: "--build-profile=ci")
