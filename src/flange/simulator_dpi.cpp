@@ -63,7 +63,10 @@ void dpi_comm_shutdown(dpi_handle_t /*handle*/)
 		delete service;
 		g_service.pop_back();
 	}
-	RCF::deinit();
+
+	if (RCF::getInitRefCount() > 0) {
+		RCF::deinit();
+	}
 }
 
 void dpi_comm_tx(dpi_handle_t handle, FlangeFrame* data)
