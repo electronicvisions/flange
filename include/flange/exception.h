@@ -1,5 +1,5 @@
 #pragma once
-
+#include "hate/visibility.h"
 #include <exception>
 #include <string>
 
@@ -15,7 +15,7 @@ public:
 	 * Construct timeout from cause message.
 	 * @param message Exception cause
 	 */
-	explicit Timeout(std::string const& message);
+	explicit Timeout(std::string const& message) SYMBOL_VISIBLE;
 
 	/** Destructor. */
 	virtual ~Timeout() noexcept override = default;
@@ -24,7 +24,7 @@ public:
 	 * Get exception cause.
 	 * @return String describing cause of exception
 	 */
-	virtual const char* what() const noexcept override;
+	virtual const char* what() const noexcept override SYMBOL_VISIBLE;
 
 private:
 	std::string const m_message;

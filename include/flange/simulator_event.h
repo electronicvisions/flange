@@ -1,5 +1,5 @@
 #pragma once
-
+#include "hate/visibility.h"
 #include <cstdint>
 #include <vector>
 
@@ -29,13 +29,13 @@ struct SimulatorEvent
 	};
 
 	/** Default constructor. */
-	SimulatorEvent();
+	SimulatorEvent() SYMBOL_VISIBLE;
 
 	/**
 	 * Constructor validating that (data != {}) only if (event_type == AL_DATA).
 	 * Only size=1 data is allowed currently.
 	 */
-	SimulatorEvent(event_types event_type, clk_t timestamp, al_data_t data = {});
+	SimulatorEvent(event_types event_type, clk_t timestamp, al_data_t data = {}) SYMBOL_VISIBLE;
 
 	/** Type of event. */
 	event_types event_type;
@@ -48,11 +48,11 @@ struct SimulatorEvent
 	/** Data field of event. Only valid if event_type == AL_DATA */
 	al_data_t data;
 
-	bool operator==(SimulatorEvent const& other) const;
-	bool operator!=(SimulatorEvent const& other) const;
+	bool operator==(SimulatorEvent const& other) const SYMBOL_VISIBLE;
+	bool operator!=(SimulatorEvent const& other) const SYMBOL_VISIBLE;
 
 	/** SF serialization used for RCF communication. */
-	void serialize(SF::Archive& ar);
+	void serialize(SF::Archive& ar) SYMBOL_VISIBLE;
 };
 
 } // namespace flange

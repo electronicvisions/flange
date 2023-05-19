@@ -7,6 +7,7 @@ from waflib.extras.symwaf2ic import get_toplevel_path
 def depends(dep):
     dep('code-format')
     dep('lib-rcf')
+    dep('hate')
 
     if getattr(dep.options, 'with_flange_python_bindings', True):
         dep.recurse('pyflange')
@@ -31,6 +32,15 @@ def configure(conf):
     if getattr(conf.options, 'with_flange_python_bindings', True):
         conf.recurse('pyflange')
 
+    conf.env.CXXFLAGS_FLANGE = [
+        '-fvisibility=hidden',
+        '-fvisibility-inlines-hidden',
+    ]
+    conf.env.LINKFLAGS_FLANGE = [
+        '-fvisibility=hidden',
+        '-fvisibility-inlines-hidden',
+    ]
+
 
 def build(bld):
     bld(target          = 'flange_inc',
@@ -41,8 +51,9 @@ def build(bld):
         target       = 'flange',
         features     = 'cxx',
         source       = bld.path.ant_glob('src/flange/*.cpp'),
-        use          = ['flange_inc', 'rcf-sf-only'],
+        use          = ['flange_inc', 'rcf-sf-only', 'hate_inc'],
         install_path = '${PREFIX}/lib',
+        uselib = 'FLANGE',
     )
 
     bld(

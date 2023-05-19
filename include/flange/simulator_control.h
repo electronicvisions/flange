@@ -2,6 +2,7 @@
 #include "RCF/RCF.hpp"
 #include "flange/simulator_dpi.h"
 #include "flange/simulator_event.h"
+#include "hate/visibility.h"
 #include <deque>
 
 namespace flange {
@@ -14,34 +15,34 @@ namespace flange {
 class SimulatorControl
 {
 public:
-	SimulatorControl();
+	SimulatorControl() SYMBOL_VISIBLE;
 
 	/// Return true if class is in runnable state
-	bool get_runnable() const;
+	bool get_runnable() const SYMBOL_VISIBLE;
 
 	/// Set runnable state to target value
-	void set_runnable(bool state);
+	void set_runnable(bool state) SYMBOL_VISIBLE;
 
 	/// Set terminate state
-	void issue_terminate();
+	void issue_terminate() SYMBOL_VISIBLE;
 
 	/// Set reset state for count cycle(s).
-	void issue_reset(SimulatorEvent::clk_t count);
+	void issue_reset(SimulatorEvent::clk_t count) SYMBOL_VISIBLE;
 
 	/// Add SimulatorEvent to "to_sim" queue
-	void push_event(SimulatorEvent const& se);
+	void push_event(SimulatorEvent const& se) SYMBOL_VISIBLE;
 
 	/// Check for events in "from_sim" queue
-	bool received_data_available() const;
+	bool received_data_available() const SYMBOL_VISIBLE;
 
 	/// Pop and return first event in "from_sim" queue
-	SimulatorEvent pop_front();
+	SimulatorEvent pop_front() SYMBOL_VISIBLE;
 
 	/// Pop and return all events in "from_sim" queue
-	std::deque<SimulatorEvent> pop_events();
+	std::deque<SimulatorEvent> pop_events() SYMBOL_VISIBLE;
 
 	/// Return current system time in "simulator clocks"
-	SimulatorEvent::clk_t current_clk() const;
+	SimulatorEvent::clk_t current_clk() const SYMBOL_VISIBLE;
 
 private:
 	/// C-API access functions
