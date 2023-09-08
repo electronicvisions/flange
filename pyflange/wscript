@@ -25,7 +25,6 @@ def build(bld):
         genpybind_tags='flange',
         features='genpybind cxx cxxshlib pyext',
         use=['flange'],
-        install_path='${PREFIX}/lib',
     )
 
     bld.add_post_fun(summary)
