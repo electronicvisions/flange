@@ -18,7 +18,8 @@ SimulatorControl::SimulatorControl() :
     m_pause_after_next_event_from_sim(false),
     m_terminate_asap(false),
     m_reset(0)
-{}
+{
+}
 
 void SimulatorControl::set_runnable(bool state)
 {
