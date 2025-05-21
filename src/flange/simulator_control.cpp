@@ -1,7 +1,6 @@
 #include "flange/simulator_control.h"
 
-extern "C"
-{
+extern "C" {
 #include <unistd.h>
 }
 
